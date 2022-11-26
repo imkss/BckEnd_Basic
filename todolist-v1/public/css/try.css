@@ -10,24 +10,34 @@ body {
   background-blend-mode: screen, color-dodge, overlay, difference, normal;
 }
 
-h2{
+h2 {
   text-align: center;
 }
-h1{
+h1 {
   text-align: center;
 }
 
 ul {
   list-style: circle;
 }
-.frm{
+.frm {
   text-align: center;
 }
 p {
   text-align: center;
 }
 
-input:checked+p {
+input:checked + h6 {
   text-decoration: line-through;
-  text-decoration-color: #A683E3;
+  text-decoration-color: red;
+}
+
+.tick {
+  float: right;
+  margin-top: 0.5em;
+}
+
+::placeholder {
+  color: gray;
+  opacity: 1;
 }
