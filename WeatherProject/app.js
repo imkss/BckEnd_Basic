@@ -18,7 +18,7 @@ app.get("/", function (req, res) {
   var hour = time.toLocaleTimeString("en-US", options);
   res.render("res", { timeNow: hour });
 
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/res.ejs");
 });
 
 app.post("/", function (req, res) {
@@ -37,6 +37,7 @@ app.post("/", function (req, res) {
     response.on("data", function (data) {
       const weatherData = JSON.parse(data);
       console.log(weatherData);
+
       const temp = weatherData.main.temp;
 
       const desc = weatherData.weather[0].description;
@@ -51,8 +52,6 @@ app.post("/", function (req, res) {
       );
       res.write(`<img src = ${imgURL}>`);
       res.send();
-
-      // res.send(__dirname + "/result.ejs");
     });
   });
 });
