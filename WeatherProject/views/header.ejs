@@ -39,10 +39,18 @@
           <div class="col-md-8 col-lg-6 col-xl-4">
             <div class="card" style="color: #4b515d; border-radius: 35px">
               <div class="card-body p-4">
-                <h6 class="d-flex justify-content-center align-items-center">
-                  <%= timeNow %>
-                </h6>
-                <br />
+
+                <div>
+                    <div id="minTemp" class="d-sm-inline-flex small " style="float: left;">
+                      
+                      <p> <%= timeNow %></p>
+                    </div>
+                    <div id="maxTemp" class="d-sm-inline-flex small " style="float: right;" >
+                    
+                      <p><%= lName %></p>
+                    </div>
+                    <br>
+                  </div>
 
                 <form
                   class="d-flex justify-content-center align-items-center"

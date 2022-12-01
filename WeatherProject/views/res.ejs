@@ -1,28 +1,38 @@
 <%- include("header") -%>
                 <div class="d-flex flex-column text-center mt-5 mb-4">
-                  <h6
+                  <h6 id="curTemp"
                     class="display-4 mb-0 font-weight-bold"
                     style="color: #1c2331"
                   >
                     <!-- //temp here// -->
-                    <%= timeNow %>
+                    <% temp %>°C
                   </h6>
-                  <span class="small" style="color: #9fa1a5"> <%= timeNow %></span>
+                  <div>
+                    <div id="minTemp" class="d-sm-inline-flex small ">
+                      
+                      <p>Min temp : <% min %>°C&nbsp;</p>
+                    </div>
+                    <div id="maxTemp" class="d-sm-inline-flex small " >
+                    
+                      <p>Max temp : <% max %>°C</p>
+                    </div>
+                  </div>
+
                 </div>
 
                 <div class="d-flex align-items-center">
                   <div class="flex-grow-1" style="font-size: 1rem">
                     <div>
                       <i class="fas fa-wind fa-fw" style="color: #9fa1a5"></i>
-                      <span class="ms-1"> <%= timeNow %></span>
+                      <span id="hum" class="ms-1"> Humidity : <% hum %></span>
                     </div>
                     <div>
                       <i class="fas fa-tint fa-fw" style="color: #9fa1a5"></i>
-                      <span class="ms-1">  <%= timeNow %> </span>
+                      <span id="pre" class="ms-1"> Pressure : <% pre %> </span>
                     </div>
                     <div>
                       <i class="fas fa-sun fa-fw" style="color: #9fa1a5"></i>
-                      <span class="ms-1"> <%= timeNow %></span>
+                      <span id="win" class="ms-1">Wind : <% win %></span>
                     </div>
                   </div>
                   <div>
