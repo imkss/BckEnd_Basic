@@ -3,7 +3,6 @@ const https = require("https");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
-// const { default: mongoose } = require("mongoose");
 const date = require(__dirname + "/date.js");
 
 console.log(date());
@@ -13,25 +12,15 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
-
-// This part will be handled in Database Now
-
-// let items = ["Eat, Sleep, Code & Repeat"];
-// let workItems = [];
-
 mongoose.connect(
-  // mongodb+srv://CloudDB:<password>@clouddb.zifbwxd.mongodb.net/?retryWrites=true&w=majority
-
   "mongodb+srv://CloudDB:kisu123@clouddb.zifbwxd.mongodb.net/todolistDB",
   {
     useNewUrlParser: true,
   }
 );
-
 const itemsSchema = {
   name: String,
 };
-
 const Item = mongoose.model("Item", itemsSchema);
 
 const item1 = new Item({
@@ -46,13 +35,8 @@ const listSchema = {
 };
 
 const List = mongoose.model("List", listSchema);
-
-let day = date();
-
 app.get("/", function (req, res) {
   Item.find({}, function (err, foundItems) {
-    // console.log(foundItems);
-
     if (foundItems.length === 0) {
       Item.insertMany(defaultItems, function (err) {
         if (err) {
@@ -64,7 +48,6 @@ app.get("/", function (req, res) {
       res.redirect("/");
     } else {
       res.render("list", { listTitle: "Today", newListItems: foundItems });
-      // dateNow : day, will be added to upr me
     }
   });
 });
@@ -134,20 +117,12 @@ app.post("/delete", function (req, res) {
         }
       }
     );
-    // res.redirect("/" + listName);
   }
 });
-
-// app.get("/work", function (req, res) {
-//   res.render("list", { listTitle: "Work List", newListItems: workItems });
-// });
 
 app.listen(4000, function () {
   console.log("Server is running on port 4000");
 });
-
-// CloudDB
-// Kisu123
 
 // mongosh "mongodb+srv://clouddb.zifbwxd.mongodb.net/myFirstDatabase" --apiVersion 1 --username CloudDB : TO GET CONNECTED FROM TERMINAL
 
