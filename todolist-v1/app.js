@@ -2,6 +2,7 @@ const express = require("express");
 const https = require("https");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const _ = require("lodash");
 // const { default: mongoose } = require("mongoose");
 const date = require(__dirname + "/date.js");
 
@@ -18,9 +19,14 @@ app.set("view engine", "ejs");
 // let items = ["Eat, Sleep, Code & Repeat"];
 // let workItems = [];
 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  // mongodb+srv://CloudDB:<password>@clouddb.zifbwxd.mongodb.net/?retryWrites=true&w=majority
+
+  "mongodb+srv://CloudDB:kisu123@clouddb.zifbwxd.mongodb.net/todolistDB",
+  {
+    useNewUrlParser: true,
+  }
+);
 
 const itemsSchema = {
   name: String,
@@ -36,7 +42,7 @@ const defaultItems = [item1];
 
 const listSchema = {
   name: String,
-  items: [itemsSchema]
+  items: [itemsSchema],
 };
 
 const List = mongoose.model("List", listSchema);
@@ -57,13 +63,14 @@ app.get("/", function (req, res) {
       });
       res.redirect("/");
     } else {
-      res.render("list", { listTitle: "Today", dateNow : day, newListItems: foundItems });
+      res.render("list", { listTitle: "Today", newListItems: foundItems });
+      // dateNow : day, will be added to upr me
     }
   });
 });
 
 app.get("/:customListName", function (req, res) {
-  const customListName = req.params.customListName;
+  const customListName = _.capitalize(req.params.customListName);
 
   List.findOne({ name: customListName }, function (err, foundList) {
     if (!err) {
@@ -79,7 +86,7 @@ app.get("/:customListName", function (req, res) {
         // Show the existing list
         res.render("list", {
           listTitle: foundList.name,
-          newListItems: foundList.items
+          newListItems: foundList.items,
         });
       }
     }
@@ -91,14 +98,14 @@ app.post("/", function (req, res) {
   const listName = req.body.list;
 
   const item = new Item({
-    name: itemName
+    name: itemName,
   });
 
-  if(listName ===  "Today") {
+  if (listName === "Today") {
     item.save();
     res.redirect("/");
   } else {
-    List.findOne({name: listName}, function(err, foundList){
+    List.findOne({ name: listName }, function (err, foundList) {
       foundList.items.push(item);
       foundList.save();
       res.redirect("/" + listName);
@@ -108,15 +115,27 @@ app.post("/", function (req, res) {
 
 app.post("/delete", function (req, res) {
   const checkedItemId = req.body.checkbox;
+  const listName = req.body.listName;
 
-  Item.findByIdAndRemove(checkedItemId, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Sucessfully removerd the items from DB");
-    }
-  });
-  res.redirect("/");
+  if (listName == "Today") {
+    Item.findByIdAndRemove(checkedItemId, function (err) {
+      if (!err) {
+        console.log("Sucessfully removerd the items from DB");
+        res.redirect("/");
+      }
+    });
+  } else {
+    List.findOneAndUpdate(
+      { name: listName },
+      { $pull: { items: { _id: checkedItemId } } },
+      function (err, foundList) {
+        if (!err) {
+          res.redirect("/" + listName);
+        }
+      }
+    );
+    // res.redirect("/" + listName);
+  }
 });
 
 // app.get("/work", function (req, res) {
@@ -126,3 +145,10 @@ app.post("/delete", function (req, res) {
 app.listen(4000, function () {
   console.log("Server is running on port 4000");
 });
+
+// CloudDB
+// Kisu123
+
+// mongosh "mongodb+srv://clouddb.zifbwxd.mongodb.net/myFirstDatabase" --apiVersion 1 --username CloudDB : TO GET CONNECTED FROM TERMINAL
+
+// mongodb+srv://CloudDB:<password>@clouddb.zifbwxd.mongodb.net/?retryWrites=true&w=majority

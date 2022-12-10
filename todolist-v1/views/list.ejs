@@ -2,16 +2,11 @@
     <section class="vh-100 gradient-custom">
       <div class="container py-5 h-100 ">
         <div class="row d-flex justify-content-center align-items-center h-100">
-          
-          <div class="box" id="heading">
-            <h2>Keep Your Short Notes Here<br /><b>🖊</b></h2><hr>
-            <h6> <%= dateNow %> </h6>
-            <h2 > <%= listTitle %> </h2>
-          </div>
-          <div class="col col-xl-10">
+                <div class="col col-xl-10">
             <div class="card">
               <div class="card-body p-5">
-                
+                <h2>Keep Your Short Notes Here<br /><b>🖊</b></h2><hr>
+            <h2 > <%= listTitle %> </h2>
                 <ul class="list-group card-body p-sm-2">
 
                  <% newListItems.forEach(function(item){ %>
@@ -22,6 +17,7 @@
                         <h6><b>🎯 </b>
                         <%= item.name %>
                       </h6>
+                      <input type="hidden" name="listName" value="<%= listTitle %>"></input>
                     </li>
                     </form>
                 <%  }); %>

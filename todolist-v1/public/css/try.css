@@ -14,28 +14,16 @@ h1, h2, p {
   text-align: center;
 }
 
-.box {
-  max-width: 700px;
-  border-radius: 5px;
-  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
-}
-
 .btn-info {
   color: #000;
   background-color: #ffffff;
   border-color: #0000009e
 }
 
-#heading {
-  background-color: #efffee;
-  text-align: center;
-  color: rgb(36, 30, 30);
-}
-
 input:checked + h6 {
   text-decoration: line-through;
   text-decoration-thickness: 3px;
-  text-decoration-color: red;
+  text-decoration-color: rgb(233, 78, 78);
 }
 
 .card {
